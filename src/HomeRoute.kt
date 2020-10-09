@@ -11,7 +11,7 @@ fun Routing.homeRoute() {
         val token = System.getenv("SLACK_TOKEN")
         val slack = Slack.getInstance()
         val response = slack.methods(token).chatPostMessage {
-            it.channel("#random")
+            it.channel("#general")
                 .text("Hello :wave:")
         }
         call.respondText("Response is: $response")

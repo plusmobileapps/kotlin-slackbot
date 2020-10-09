@@ -8,28 +8,30 @@ import org.slf4j.event.*
 import io.ktor.routing.*
 import io.ktor.http.*
 import io.ktor.gson.*
+import io.ktor.server.engine.embeddedServer
+import io.ktor.server.netty.Netty
 
-fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
+fun main(args: Array<String>) {
+    val port = System.getenv("PORT").toIntOrNull() ?: 8080
 
-@Suppress("unused") // Referenced in application.conf
-@kotlin.jvm.JvmOverloads
-fun Application.module(testing: Boolean = false) {
-    install(CallLogging) {
-        level = Level.INFO
-        filter { call -> call.request.path().startsWith("/") }
-    }
-
-    install(ContentNegotiation) {
-        gson {
+    embeddedServer(Netty, port) {
+        install(CallLogging) {
+            level = Level.INFO
+            filter { call -> call.request.path().startsWith("/") }
         }
-    }
 
-    routing {
-        homeRoute()
-
-        get("/json/gson") {
-            call.respond(mapOf("hello" to "world"))
+        install(ContentNegotiation) {
+            gson {
+            }
         }
-    }
+
+        routing {
+            homeRoute()
+
+            get("/json/gson") {
+                call.respond(mapOf("hello" to "world"))
+            }
+        }
+    }.start(wait = true)
 }
 
