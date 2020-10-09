@@ -25,9 +25,7 @@ fun Application.module(testing: Boolean = false) {
     }
 
     routing {
-        get("/") {
-            call.respondText("HELLO WORLD!", contentType = ContentType.Text.Plain)
-        }
+        homeRoute()
 
         get("/json/gson") {
             call.respond(mapOf("hello" to "world"))
