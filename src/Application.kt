@@ -27,7 +27,7 @@ fun main(args: Array<String>) {
 
         routing {
             homeRoute()
-
+            githubWebhookRoute()
             get("/json/gson") {
                 call.respond(mapOf("hello" to "world"))
             }
