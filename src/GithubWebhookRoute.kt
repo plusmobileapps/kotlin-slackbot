@@ -8,6 +8,7 @@ import io.ktor.routing.Route
 import io.ktor.routing.post
 
 fun Route.githubWebhookRoute() {
+    //test
     post("kotlin-slackbot-github") {
         val request = call.receive<GithubPushEvent>()
 
